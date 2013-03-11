@@ -1,0 +1,11 @@
+# Ignore compiled files
+*.class
+
+# Package Files
+*.jar
+*.war
+
+# Eclipse Files
+.project
+.classpath
+.settings
