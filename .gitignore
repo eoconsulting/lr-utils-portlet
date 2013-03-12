@@ -1,6 +1,9 @@
 # Ignore compiled files
 *.class
 
+# Ignore resources files
+*.tld
+
 # Package Files
 *.jar
 *.war

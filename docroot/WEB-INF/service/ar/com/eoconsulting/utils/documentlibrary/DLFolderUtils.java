@@ -84,6 +84,27 @@ public abstract class DLFolderUtils {
 	}
 
 	/**
+	 * @return <code>true</code> if the folder
+	 * with <code>ancestorFolderId</code>
+	 * is ancestor of <code>folderId</code>.
+	 */
+	public static boolean isAncestorFolder(
+			long folderId, long ancestorFolderId)
+				throws PortalException, SystemException {
+
+		DLFolder dlFolder = DLFolderLocalServiceUtil.getDLFolder(folderId);
+		DLFolder ancestorFolder = DLFolderLocalServiceUtil.getDLFolder(ancestorFolderId);
+		DLFolder parentFolder = dlFolder.getParentFolder();
+		while(parentFolder != null) {
+			if(parentFolder.equals(ancestorFolder)) {
+				return true;
+			}
+			parentFolder = parentFolder.getParentFolder();
+		}
+		return false;
+	}
+
+	/**
 	 * @return <code>true</code> if <code>parentFolderName</code>
 	 * is ancestor of <code>dlFileEntry</code>.
 	 */

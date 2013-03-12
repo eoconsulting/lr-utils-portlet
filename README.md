@@ -1,7 +1,7 @@
 Liferay Utils
 =============
 
-This project contains Liferay Portal 6.1 CE utils classes for development. IS NOT A PORTLET.
+This project contains *Liferay Portal 6.1 CE* utils classes for development. IS NOT A PORTLET.
 
 Was created with the _Service Builder_ for building purpose.
 
@@ -15,7 +15,7 @@ Then copy the generated .jar in:
 
     docroot/WEB-INF/lib/lr-utils-portlet-service.jar
 
-Into your project.
+into your project.
 
 This sources are available in https://github.com/eoconsulting/lr-utils-portlet
 
