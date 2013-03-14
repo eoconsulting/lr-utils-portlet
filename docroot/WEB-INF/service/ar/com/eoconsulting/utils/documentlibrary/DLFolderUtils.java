@@ -93,6 +93,9 @@ public abstract class DLFolderUtils {
 				throws PortalException, SystemException {
 
 		DLFolder dlFolder = DLFolderLocalServiceUtil.getDLFolder(folderId);
+		if(dlFolder!=null && ancestorFolderId==0) {
+			return true;
+		}
 		DLFolder ancestorFolder = DLFolderLocalServiceUtil.getDLFolder(ancestorFolderId);
 		DLFolder parentFolder = dlFolder.getParentFolder();
 		while(parentFolder != null) {
