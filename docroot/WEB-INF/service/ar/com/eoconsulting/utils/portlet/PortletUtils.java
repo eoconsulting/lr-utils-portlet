@@ -2,6 +2,7 @@ package ar.com.eoconsulting.utils.portlet;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 import javax.servlet.http.HttpServletRequest;
@@ -49,14 +50,31 @@ public abstract class PortletUtils {
 			int width)
 					throws WindowStateException, PortletModeException {
 
+		return getModalURL(request, pageContext, liferayPortletResponse, themeDisplay,
+				themeDisplay.getPortletDisplay().getId(), mvcPath, titleKey, width);
+	}
+
+	public static String getModalURL(
+			HttpServletRequest request,
+			PageContext pageContext,
+			LiferayPortletResponse liferayPortletResponse,
+			ThemeDisplay themeDisplay,
+			String portletId,
+			String mvcPath,
+			String titleKey,
+			int width)
+					throws WindowStateException, PortletModeException {
+
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-				request, themeDisplay.getPortletDisplay().getId(),
-				themeDisplay.getPlid(),
-				javax.portlet.PortletRequest.RENDER_PHASE);
+				request, portletId, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 		portletURL.setPortletMode(PortletMode.VIEW);
+		String portletIdReferral = themeDisplay.getPortletDisplay().getId();
 		portletURL.setParameter("mvcPath", mvcPath);
+		if(!portletIdReferral.equals(portletId)) {
+			portletURL.setParameter("portletIdReferral", portletIdReferral);  // This can be util when the pop-up is called from another portlet
+		}
 
 		String title = LanguageUtil.get(pageContext, titleKey);
 		String modalURL = "javascript:Liferay.Util.openWindow("
@@ -67,6 +85,13 @@ public abstract class PortletUtils {
 			+ "uri:'" + HtmlUtil.escapeURL(portletURL.toString()) + "'});";
 
 		return modalURL;
+	}
+
+	public static String toPortletNamespace(String portletOrNamespaceId) {
+		if(portletOrNamespaceId.startsWith("_") && portletOrNamespaceId.endsWith("_")) {
+			return portletOrNamespaceId;
+		}
+		return "_" + portletOrNamespaceId + "_";
 	}
 
 	/**
